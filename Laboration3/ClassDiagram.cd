@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Laboration3.CheckOutManager">
+    <Position X="4.5" Y="5.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>BAAAgAAAAgggAAAAAAAAAAAAAgAAIAAlAAAAAAAAACA=</HashCode>
+      <FileName>CheckOutManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laboration3.MediaShop">
+    <Position X="0.5" Y="0.5" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IiQAoQCJpHCUhrKEAzCzRJeCjIYJgwXQWFYKIDGjYxg=</HashCode>
+      <FileName>MediaShop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laboration3.Product">
+    <Position X="7.25" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAACIAgAAQAAAAAECAAAAAQAAAAAIAAAEQAAAAAAAAA=</HashCode>
+      <FileName>Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laboration3.ReceiptPrinter">
+    <Position X="5" Y="9.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAIAABCAEAAAAAAAIAAQAAAAAIAAAAAAAAEAIA=</HashCode>
+      <FileName>ReceiptPrinter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laboration3.ShoppingCartItem">
+    <Position X="8.25" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAQAAAAAAAAAAAASAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ShoppingCartItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laboration3.StatisticsItem">
+    <Position X="7.25" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAABIAAAAAAAAAAgAAA=</HashCode>
+      <FileName>StatisticsItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laboration3.StockManager">
+    <Position X="4.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAABAAAgACAJQAAAAAAAAAAAAAAAAASAAEQ=</HashCode>
+      <FileName>StockManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laboration3.Validation">
+    <Position X="0.5" Y="9.75" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAgAAAAAAAAAEAIEAAAAAAQAEACMKAAABgAAABABE=</HashCode>
+      <FileName>Validation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
