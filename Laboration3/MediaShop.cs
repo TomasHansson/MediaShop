@@ -349,5 +349,19 @@ namespace Laboration3
             statisticsBindingSource.DataSource = null;
             statisticsBindingSource.DataSource = Statistics;
         }
+
+        private void ExportProductsButton_Click(object sender, EventArgs e)
+        {
+            if (Validation.ProductsListIsEmpty(Stock.Products))
+                return;
+
+            Stock.ExportProducts();
+        }
+
+        private void ImportProductsButton_Click(object sender, EventArgs e)
+        {
+            Stock.ImportProducts();
+            RefreshProductsDataGridVew();
+        }
     }
 }

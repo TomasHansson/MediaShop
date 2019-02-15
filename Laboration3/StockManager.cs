@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Laboration3
 {
@@ -102,6 +103,60 @@ namespace Laboration3
                         line += sellRecord.Value.ToString();
                         streamWriter.WriteLine(line);
                     }
+                }
+            }
+        }
+
+        private const string exportProductsFile = @"..\..\..\..\Laboration4\Laboration4\bin\Debug\frMediaShop\Products.csv";
+        public void ExportProducts()
+        {
+            using (StreamWriter streamWriter = new StreamWriter(exportProductsFile))
+            {
+                foreach (Product product in Products)
+                {
+                    string line = product.Id.ToString() + ';';
+                    line += product.Name + ';';
+                    line += product.Price.ToString() + ';';
+                    line += product.Type + ';';
+                    line += product.Creator + ';';
+                    line += product.Publisher + ';';
+                    line += product.NumberInStock.ToString() + ';';
+                    line += product.AmountSold.ToString();
+                    streamWriter.WriteLine(line);
+                }
+            }
+        }
+
+        private const string importProductsFile = @"..\..\..\..\Laboration4\Laboration4\bin\Debug\tillMediaShop\Products.csv";
+        public void ImportProducts()
+        {
+            if (!File.Exists(importProductsFile))
+            {
+                MessageBox.Show("Det finns ingen fil att importera.");
+                return;
+            }
+
+            Products.Clear();
+            using (StreamReader streamReader = new StreamReader(importProductsFile))
+            {
+                string line;
+                string[] lineData;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    lineData = line.Split(';');
+                    Product product = new Product
+                    {
+                        Id = Convert.ToInt32(lineData[0]),
+                        Name = lineData[1],
+                        Price = Convert.ToDouble(lineData[2]),
+                        Type = lineData[3],
+                        Creator = lineData[4],
+                        Publisher = lineData[5],
+                        NumberInStock = Convert.ToInt32(lineData[6]),
+                        SellRecords = new Dictionary<DateTime, int>(),
+                        AmountSold = Convert.ToInt32(lineData[7])
+                    };
+                    Products.Add(product);
                 }
             }
         }

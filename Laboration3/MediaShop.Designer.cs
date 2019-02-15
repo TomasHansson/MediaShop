@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.productListDataGridView = new System.Windows.Forms.DataGridView();
             this.stockTab = new System.Windows.Forms.TabPage();
+            this.exportProductsButton = new System.Windows.Forms.Button();
             this.saveToFileButton = new System.Windows.Forms.Button();
             this.newProductPanel = new System.Windows.Forms.Panel();
             this.publisherLabel = new System.Windows.Forms.Label();
@@ -96,6 +97,7 @@
             this.searchInformationLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.statisticsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.importProductsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.productListDataGridView)).BeginInit();
             this.stockTab.SuspendLayout();
             this.newProductPanel.SuspendLayout();
@@ -132,6 +134,8 @@
             // 
             // stockTab
             // 
+            this.stockTab.Controls.Add(this.importProductsButton);
+            this.stockTab.Controls.Add(this.exportProductsButton);
             this.stockTab.Controls.Add(this.saveToFileButton);
             this.stockTab.Controls.Add(this.newProductPanel);
             this.stockTab.Controls.Add(this.saveDeliveryButton);
@@ -149,13 +153,23 @@
             this.stockTab.Text = "Lager";
             this.stockTab.UseVisualStyleBackColor = true;
             // 
+            // exportProductsButton
+            // 
+            this.exportProductsButton.Location = new System.Drawing.Point(898, 382);
+            this.exportProductsButton.Name = "exportProductsButton";
+            this.exportProductsButton.Size = new System.Drawing.Size(139, 23);
+            this.exportProductsButton.TabIndex = 19;
+            this.exportProductsButton.Text = "Exportera produktregister";
+            this.exportProductsButton.UseVisualStyleBackColor = true;
+            this.exportProductsButton.Click += new System.EventHandler(this.ExportProductsButton_Click);
+            // 
             // saveToFileButton
             // 
-            this.saveToFileButton.Location = new System.Drawing.Point(898, 382);
+            this.saveToFileButton.Location = new System.Drawing.Point(782, 382);
             this.saveToFileButton.Name = "saveToFileButton";
-            this.saveToFileButton.Size = new System.Drawing.Size(139, 23);
+            this.saveToFileButton.Size = new System.Drawing.Size(113, 23);
             this.saveToFileButton.TabIndex = 18;
-            this.saveToFileButton.Text = "Spara produktlistan till fil";
+            this.saveToFileButton.Text = "Spara produktlistan";
             this.saveToFileButton.UseVisualStyleBackColor = true;
             this.saveToFileButton.Click += new System.EventHandler(this.SaveToFileButton_Click);
             // 
@@ -329,9 +343,9 @@
             // 
             // removeProductButton
             // 
-            this.removeProductButton.Location = new System.Drawing.Point(782, 382);
+            this.removeProductButton.Location = new System.Drawing.Point(782, 353);
             this.removeProductButton.Name = "removeProductButton";
-            this.removeProductButton.Size = new System.Drawing.Size(90, 23);
+            this.removeProductButton.Size = new System.Drawing.Size(113, 23);
             this.removeProductButton.TabIndex = 11;
             this.removeProductButton.Text = "Ta bort produkt";
             this.removeProductButton.UseVisualStyleBackColor = true;
@@ -788,6 +802,16 @@
             this.label3.TabIndex = 13;
             this.label3.Text = "tas bort eller läggs till i systemet.";
             // 
+            // importProductsButton
+            // 
+            this.importProductsButton.Location = new System.Drawing.Point(898, 353);
+            this.importProductsButton.Name = "importProductsButton";
+            this.importProductsButton.Size = new System.Drawing.Size(139, 23);
+            this.importProductsButton.TabIndex = 20;
+            this.importProductsButton.Text = "Importera produktregister";
+            this.importProductsButton.UseVisualStyleBackColor = true;
+            this.importProductsButton.Click += new System.EventHandler(this.ImportProductsButton_Click);
+            // 
             // MediaShop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -905,6 +929,8 @@
         private System.Windows.Forms.DataGridView statisticsDataGridView;
         private System.Windows.Forms.BindingSource statisticsBindingSource;
         private System.Windows.Forms.Button showItemStatisticsButton;
+        private System.Windows.Forms.Button exportProductsButton;
+        private System.Windows.Forms.Button importProductsButton;
     }
 }
 
