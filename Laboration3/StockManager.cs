@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Laboration3
 {
     public class StockManager
     {
         public List<Product> Products { get; set; } = new List<Product>();
-
-        public StockManager(string productsFile, string sellRecordsFile)
-        {
-            if (File.Exists(productsFile))
-            {
-                Products = FileManager.LoadProductsFromFile(productsFile);
-                if (File.Exists(sellRecordsFile))
-                    FileManager.LoadSellRecordsFromFile(Products, sellRecordsFile);
-            }
-        }
 
         public void AddProduct(int id, string name, double price, string type, string creator, string publisher)
         {

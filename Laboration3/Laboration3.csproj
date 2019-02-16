@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="CheckOutManager.cs" />
     <Compile Include="FileManager.cs" />
+    <Compile Include="QueryManager.cs" />
     <Compile Include="ReceiptPrinter.cs" />
     <Compile Include="ShoppingCartItem.cs" />
     <Compile Include="Product.cs" />

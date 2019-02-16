@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -9,10 +8,10 @@ namespace Laboration3
     public partial class MediaShop : Form
     {
         public CheckOutManager CheckOut { get; set; } = new CheckOutManager();
-        public StockManager Stock { get; set; } = new StockManager(productsFile, sellRecordsFile);
+        public StockManager Stock { get; set; } = new StockManager();
+        public QueryManager Query { get; set; } = new QueryManager();
         public ShoppingCartItem SelectedShoppingCartItem { get; set; }
         public Product SelectedProduct { get; set; }
-        public List<StatisticsItem> Statistics { get; set; } = new List<StatisticsItem>();
 
         private const string productsFile = "Products.csv";
         private const string sellRecordsFile = "SellRecords.csv";
@@ -20,9 +19,20 @@ namespace Laboration3
         public MediaShop()
         {
             InitializeComponent();
+            LoadProductsOnStart();
             SetupDataSources();
             searchFilterComboBox.SelectedIndex = 1; // The preset value for the searchfilter is "Namn".
             timePeriodComboBox.SelectedIndex = 0; // The preset value for the time period in statistics is "Total försäljning".
+        }
+
+        private void LoadProductsOnStart()
+        {
+            if (File.Exists(productsFile))
+            {
+                Stock.Products = FileManager.LoadProductsFromFile(productsFile);
+                if (File.Exists(sellRecordsFile))
+                    FileManager.LoadSellRecordsFromFile(Stock.Products, sellRecordsFile);
+            }
         }
 
         private void SetupDataSources()
@@ -34,7 +44,7 @@ namespace Laboration3
             shoppingCartBindingSource.DataSource = CheckOut.ShoppingCart;
             shoppingCartDataGridView.DataSource = shoppingCartBindingSource;
             statisticsListBox.DataSource = productsListBindingSource;
-            statisticsBindingSource.DataSource = Statistics;
+            statisticsBindingSource.DataSource = Query.StatisticsResult;
             statisticsDataGridView.DataSource = statisticsBindingSource;
         }
 
@@ -247,31 +257,11 @@ namespace Laboration3
 
             string searchFilter = searchFilterComboBox.Text;
             string searchTerm = searchTermTextBox.Text.Trim().ToLower();
-            double atLeast = double.MinValue;
-            double atMost = double.MaxValue;
+            string minValue = searchAtLeastTextBox.Text;
+            string maxValue = searchAtMostTextBox.Text;
 
-            // This means that any non-numeric input value is simply ignored. Since a faulty input here won't cause any errors in the program, error messages were omitted and a
-            // default value is used instead, ie sticking to double.MinValue or double.MaxValue, respectivly.
-            if (double.TryParse(searchAtLeastTextBox.Text, out double atLeastInput)) 
-                atLeast = atLeastInput;
-
-            if (double.TryParse(searchAtMostTextBox.Text, out double atMostInput))
-                atMost = atMostInput;
-
-            List<Product> foundProducts = new List<Product>();
-            switch (searchFilter)
-            {
-                case "Varunummer": foundProducts = Stock.Products.Where(x => x.Id >= atLeast && x.Id <= atMost).ToList(); break;
-                case "Namn": foundProducts = Stock.Products.Where(x => x.Name.ToLower().Contains(searchTerm)).ToList(); break;
-                case "Pris": foundProducts = Stock.Products.Where(x => x.Price >= atLeast && x.Price <= atMost).ToList(); break;
-                case "Varutyp": foundProducts = Stock.Products.Where(x => x.Type.ToLower().Contains(searchTerm)).ToList(); break;
-                case "Skapare": foundProducts = Stock.Products.Where(x => x.Creator.ToLower().Contains(searchTerm)).ToList(); break;
-                case "Utgivare": foundProducts = Stock.Products.Where(x => x.Publisher.ToLower().Contains(searchTerm)).ToList(); break;
-                case "Lager": foundProducts = Stock.Products.Where(x => x.NumberInStock >= atLeast && x.NumberInStock <= atMost).ToList(); break;
-                case "Antal sålda": foundProducts = Stock.Products.Where(x => x.AmountSold >= atLeast && x.AmountSold <= atMost).ToList(); break;
-                default: foundProducts = Stock.Products; break;
-            }
-            productsListBindingSource.DataSource = foundProducts;
+            Query.CreateSearchResult(Stock.Products, searchFilter, searchTerm, minValue, maxValue);
+            productsListBindingSource.DataSource = Query.SearchResult;
         }
 
         private void ResetSearchFilterButton_Click(object sender, EventArgs e)
@@ -307,31 +297,10 @@ namespace Laboration3
             if (Validation.ProductsListIsEmpty(Stock.Products) || Validation.NoProductIsSelected(SelectedProduct))
                 return;
 
-            Statistics.Clear();
-            Statistics.Add(CreateStatisticsItemFromProduct(SelectedProduct));
+            Query.CreateSingleItemResult(SelectedProduct);
             // By reseting the datasource for the bindingsource, the list is refreshed when items are added or removed.
             statisticsBindingSource.DataSource = null;
-            statisticsBindingSource.DataSource = Statistics;
-        }
-
-        private StatisticsItem CreateStatisticsItemFromProduct(Product product)
-        {
-            StatisticsItem statisticsItem = new StatisticsItem()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                AmountSoldLastMonth = 0,
-                AmountSoldLastYear = 0,
-                AmountSold = product.AmountSold
-            };
-            foreach (var sellRecord in product.SellRecords)
-            {
-                if (sellRecord.Key >= DateTime.Today.AddMonths(-1))
-                    statisticsItem.AmountSoldLastMonth += sellRecord.Value;
-                if (sellRecord.Key >= DateTime.Today.AddYears(-1))
-                    statisticsItem.AmountSoldLastYear += sellRecord.Value;
-            }
-            return statisticsItem;
+            statisticsBindingSource.DataSource = Query.StatisticsResult;
         }
 
         private void ShowTopSellersButton_Click(object sender, EventArgs e)
@@ -339,18 +308,10 @@ namespace Laboration3
             if (Validation.ProductsListIsEmpty(Stock.Products))
                 return;
 
-            Statistics.Clear();
-            foreach (Product product in Stock.Products)
-                Statistics.Add(CreateStatisticsItemFromProduct(product));
-            if (timePeriodComboBox.Text == "Total försäljning")
-                Statistics = Statistics.OrderByDescending(x => x.AmountSold).Take(10).ToList();
-            else if (timePeriodComboBox.Text == "Senaste året")
-                Statistics = Statistics.OrderByDescending(x => x.AmountSoldLastYear).Take(10).ToList();
-            else if (timePeriodComboBox.Text == "Senaste månaden")
-                Statistics = Statistics.OrderByDescending(x => x.AmountSoldLastMonth).Take(10).ToList();
+            Query.CreateTopSellersResult(Stock.Products, timePeriodComboBox.Text);
             // By reseting the datasource for the bindingsource, the list is refreshed when items are added or removed.
             statisticsBindingSource.DataSource = null;
-            statisticsBindingSource.DataSource = Statistics;
+            statisticsBindingSource.DataSource = Query.StatisticsResult;
         }
 
         private void ExportProductsButton_Click(object sender, EventArgs e)
