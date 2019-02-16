@@ -1,61 +1,144 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="Laboration3.CheckOutManager">
-    <Position X="4.5" Y="5.75" Width="4" />
+    <Position X="4.5" Y="3.75" Width="4" />
     <TypeIdentifier>
       <HashCode>BAAAgAAAAgggAAAAAAAAAAAAAgAAIAAlAAAAAAAAACA=</HashCode>
       <FileName>CheckOutManager.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Laboration3.FileManager">
+    <Position X="10" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAABAAAAACABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Laboration3.MediaShop">
     <Position X="0.5" Y="0.5" Width="3.75" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
+    <Members>
+      <Field Name="addDeliveryLabel" Hidden="true" />
+      <Field Name="addProductButton" Hidden="true" />
+      <Field Name="addProductToCartButton" Hidden="true" />
+      <Field Name="amountDelivered" Hidden="true" />
+      <Field Name="amountDeliveredLabel" Hidden="true" />
+      <Field Name="amountLabel" Hidden="true" />
+      <Field Name="amountReturned" Hidden="true" />
+      <Field Name="amountReturnedLabel" Hidden="true" />
+      <Field Name="amountToAddToCart" Hidden="true" />
+      <Field Name="availableProductsLabel" Hidden="true" />
+      <Field Name="availableProductsListBox" Hidden="true" />
+      <Field Name="checkOutTab" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="creatorLabel" Hidden="true" />
+      <Field Name="creatorTextBox" Hidden="true" />
+      <Field Name="decreaseAmountOfItemButton" Hidden="true" />
+      <Field Name="exportProductsButton" Hidden="true" />
+      <Field Name="finishOrderButton" Hidden="true" />
+      <Field Name="idLabel" Hidden="true" />
+      <Field Name="idTextBox" Hidden="true" />
+      <Field Name="importProductsButton" Hidden="true" />
+      <Field Name="increaseAmountOfItemButton" Hidden="true" />
+      <Field Name="label1" Hidden="true" />
+      <Field Name="label2" Hidden="true" />
+      <Field Name="label3" Hidden="true" />
+      <Field Name="nameLabel" Hidden="true" />
+      <Field Name="nameTextBox" Hidden="true" />
+      <Field Name="newProductPanel" Hidden="true" />
+      <Field Name="priceLabel" Hidden="true" />
+      <Field Name="priceTextBox" Hidden="true" />
+      <Field Name="productListDataGridView" Hidden="true" />
+      <Field Name="productsLabel" Hidden="true" />
+      <Field Name="productsListBindingSource" Hidden="true" />
+      <Field Name="productsListBox" Hidden="true" />
+      <Field Name="publisherLabel" Hidden="true" />
+      <Field Name="publisherTextBox" Hidden="true" />
+      <Field Name="removeItemButton" Hidden="true" />
+      <Field Name="removeProductButton" Hidden="true" />
+      <Field Name="resetSearchFilterButton" Hidden="true" />
+      <Field Name="returnOfProductLabel" Hidden="true" />
+      <Field Name="saveDeliveryButton" Hidden="true" />
+      <Field Name="saveReturnButton" Hidden="true" />
+      <Field Name="saveToFileButton" Hidden="true" />
+      <Field Name="searchAtLeastLabel" Hidden="true" />
+      <Field Name="searchAtLeastTextBox" Hidden="true" />
+      <Field Name="searchAtMostLabel" Hidden="true" />
+      <Field Name="searchAtMostTextBox" Hidden="true" />
+      <Field Name="searchButton" Hidden="true" />
+      <Field Name="searchFilterComboBox" Hidden="true" />
+      <Field Name="searchInformationLabel" Hidden="true" />
+      <Field Name="searchTermTextBox" Hidden="true" />
+      <Field Name="sellDateCalendar" Hidden="true" />
+      <Field Name="sellDateLabel" Hidden="true" />
+      <Field Name="shoppingCartBindingSource" Hidden="true" />
+      <Field Name="shoppingCartDataGridView" Hidden="true" />
+      <Field Name="showItemStatisticsButton" Hidden="true" />
+      <Field Name="showTopSellersButton" Hidden="true" />
+      <Field Name="statisticsBindingSource" Hidden="true" />
+      <Field Name="statisticsDataGridView" Hidden="true" />
+      <Field Name="statisticsListBox" Hidden="true" />
+      <Field Name="statisticsOfProductLabel" Hidden="true" />
+      <Field Name="statisticsTab" Hidden="true" />
+      <Field Name="stockTab" Hidden="true" />
+      <Field Name="tabControl" Hidden="true" />
+      <Field Name="timePeriodComboBox" Hidden="true" />
+      <Field Name="topSellersLabel" Hidden="true" />
+      <Field Name="totalPriceLabel" Hidden="true" />
+      <Field Name="totalPriceTextBox" Hidden="true" />
+      <Field Name="typeLabel" Hidden="true" />
+      <Field Name="typeTextBox" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>IiQAoQCJpHCUhrKEAzCzRJeCjIYJgwXQWFYKIDGjYxg=</HashCode>
+      <HashCode>IiQIoQCJJHCUhrKgAzCzRJeCjIaJgw3wWFYKIDWjYxk=</HashCode>
       <FileName>MediaShop.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Laboration3.Product">
-    <Position X="7.25" Y="0.5" Width="3" />
+    <Position X="6.75" Y="0.5" Width="3" />
     <TypeIdentifier>
       <HashCode>AAACIAgAAQAAAAAECAAAAAQAAAAAIAAAEQAAAAAAAAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Laboration3.QueryManager">
+    <Position X="8.75" Y="6" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAACAAACAAAAAQAAAAAAAAAgAAgAAAA=</HashCode>
+      <FileName>QueryManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Laboration3.ReceiptPrinter">
-    <Position X="5" Y="9.75" Width="3" />
+    <Position X="5" Y="7.75" Width="3" />
     <TypeIdentifier>
       <HashCode>QAAAAAAIAABCAEAAAAAAAIAAQAAAAAIAAAAAAAAEAIA=</HashCode>
       <FileName>ReceiptPrinter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Laboration3.ShoppingCartItem">
-    <Position X="8.25" Y="9.75" Width="1.75" />
+    <Position X="8.75" Y="3.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAACIAAAAQAAAAAAAAAAAASAAAAAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>ShoppingCartItem.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Laboration3.StatisticsItem">
-    <Position X="7.25" Y="3.75" Width="2.25" />
+    <Position X="8.75" Y="8.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAABIAAAAAAAAAAgAAA=</HashCode>
       <FileName>StatisticsItem.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Laboration3.StockManager">
-    <Position X="4.5" Y="0.5" Width="2.5" />
+    <Position X="4.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAABAAAgACAJQAAAAAAAAAAAAAAAAASAAEQ=</HashCode>
+      <HashCode>AAAAACAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAACAAEQ=</HashCode>
       <FileName>StockManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Laboration3.Validation">
-    <Position X="0.5" Y="9.75" Width="4.25" />
+    <Position X="0.5" Y="10.25" Width="4.25" />
     <TypeIdentifier>
-      <HashCode>BAAAgAAAAAAAAAEAIEAAAAAAQAEACMKAAABgAAABABE=</HashCode>
+      <HashCode>BAAAgAAAAAAAAAEAIEAAAAAAQAEACMKAAABgAAQBABE=</HashCode>
       <FileName>Validation.cs</FileName>
     </TypeIdentifier>
   </Class>
