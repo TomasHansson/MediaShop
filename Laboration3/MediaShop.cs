@@ -9,10 +9,13 @@ namespace Laboration3
     public partial class MediaShop : Form
     {
         public CheckOutManager CheckOut { get; set; } = new CheckOutManager();
-        public StockManager Stock { get; set; } = new StockManager();
+        public StockManager Stock { get; set; } = new StockManager(productsFile, sellRecordsFile);
         public ShoppingCartItem SelectedShoppingCartItem { get; set; }
         public Product SelectedProduct { get; set; }
         public List<StatisticsItem> Statistics { get; set; } = new List<StatisticsItem>();
+
+        private const string productsFile = "Products.csv";
+        private const string sellRecordsFile = "SellRecords.csv";
 
         public MediaShop()
         {
@@ -223,8 +226,8 @@ namespace Laboration3
             if (Validation.ProductsListIsEmpty(Stock.Products))
                 return;
 
-            Stock.SaveProductsToFile();
-            Stock.SaveSellRecordsToFile();
+            FileManager.SaveProductsToFile(Stock.Products, productsFile);
+            FileManager.SaveSellRecordsToFile(Stock.Products, sellRecordsFile);
         }
 
         private void ProductsListBindingSource_CurrentChanged(object sender, EventArgs e)
@@ -355,12 +358,18 @@ namespace Laboration3
             if (Validation.ProductsListIsEmpty(Stock.Products))
                 return;
 
-            Stock.ExportProducts();
+            const string exportProductsFile = @"..\..\..\..\Laboration4\Laboration4\bin\Debug\frMediaShop\Products.csv";
+            FileManager.SaveProductsToFile(Stock.Products, exportProductsFile);
         }
 
         private void ImportProductsButton_Click(object sender, EventArgs e)
         {
-            Stock.ImportProducts();
+            const string importProductsFile = @"..\..\..\..\Laboration4\Laboration4\bin\Debug\tillMediaShop\Products.csv";
+
+            if (Validation.NoImportFileFound(importProductsFile))
+                return;
+
+            Stock.Products = FileManager.LoadProductsFromFile(importProductsFile);
             RefreshProductsDataGridVew();
         }
     }

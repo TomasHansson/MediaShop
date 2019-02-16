@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Laboration3
@@ -192,6 +193,16 @@ namespace Laboration3
             if (shoppingCart.Exists(x => x.Id == product.Id))
             {
                 MessageBox.Show("Du kan inte ta bort en produkt från systemet medan den finns i varukorgen.");
+                return true;
+            }
+            return false;
+        }
+
+        public static bool NoImportFileFound(string filepath)
+        {
+            if (!File.Exists(filepath))
+            {
+                MessageBox.Show("Det finns ingen fil att importera.");
                 return true;
             }
             return false;
