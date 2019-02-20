@@ -8,63 +8,63 @@ namespace Laboration3
 {
     public class ReceiptPrinter
     {
-        private PrintDocument printDocument = new PrintDocument();
-        private readonly PrintDialog printDialog = new PrintDialog();
-        private readonly List<ShoppingCartItem> shoppingCart;
-        private double orderTotal;
+        private PrintDocument _printDocument = new PrintDocument();
+        private readonly PrintDialog _printDialog = new PrintDialog();
+        private readonly List<ShoppingCartItem> _shoppingCart;
+        private double _orderTotal;
 
-        public ReceiptPrinter(List<ShoppingCartItem> _shoppingCart)
+        public ReceiptPrinter(List<ShoppingCartItem> shoppingCart)
         {
-            printDialog.Document = printDocument;
-            printDocument.PrintPage += new PrintPageEventHandler(PrintDocument_PrintPage);
-            shoppingCart = _shoppingCart;
+            _printDialog.Document = _printDocument;
+            _printDocument.PrintPage += new PrintPageEventHandler(PrintDocument_PrintPage);
+            _shoppingCart = shoppingCart;
         }
 
-        public void PrintReceipt(double _orderTotal)
+        public void PrintReceipt(double orderTotal)
         {
-            orderTotal = _orderTotal;
-            if (printDialog.ShowDialog() == DialogResult.OK)
-                printDocument.Print();
+            _orderTotal = orderTotal;
+            if (_printDialog.ShowDialog() == DialogResult.OK)
+                _printDocument.Print();
         }
 
-        private const int linesPerPage = 40;
-        private int linesToWrite = 0;
-        private int linesWrittenOnPage = 0;
-        private int totalLinesWritten = 0;
-        private bool isFirstPage = true;
+        private const int _linesPerPage = 40;
+        private int _linesToWrite = 0;
+        private int _linesWrittenOnPage = 0;
+        private int _totalLinesWritten = 0;
+        private bool _isFirstPage = true;
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            if (isFirstPage)
+            if (_isFirstPage)
             {
-                linesToWrite = shoppingCart.Count;
-                linesWrittenOnPage = 0;
-                totalLinesWritten = 0;
-                string receiptHeader = "Datum: " + DateTime.Now.ToShortDateString() + ". Kl. " + DateTime.Now.ToShortTimeString() + ". Köpets totala kostnad: " + orderTotal + ".";
+                _linesToWrite = _shoppingCart.Count;
+                _linesWrittenOnPage = 0;
+                _totalLinesWritten = 0;
+                string receiptHeader = "Datum: " + DateTime.Now.ToShortDateString() + ". Kl. " + DateTime.Now.ToShortTimeString() + ". Köpets totala kostnad: " + _orderTotal + ".";
                 e.Graphics.DrawString(receiptHeader, new Font("Arial", 10, FontStyle.Bold), Brushes.Black, 90, 140);
-                isFirstPage = false;
+                _isFirstPage = false;
             }
 
-            while (linesWrittenOnPage < linesToWrite && linesWrittenOnPage < linesPerPage)
+            while (_linesWrittenOnPage < _linesToWrite && _linesWrittenOnPage < _linesPerPage)
             {
-                string lineForShoppingItem = "Varunummer " + shoppingCart[totalLinesWritten].Id.ToString() + ": " +
-                                             shoppingCart[totalLinesWritten].Name + ", # " +
-                                             shoppingCart[totalLinesWritten].Amount.ToString() + " á " +
-                                             shoppingCart[totalLinesWritten].Price.ToString() + " = " +
-                                             shoppingCart[totalLinesWritten].TotalPrice.ToString() + " kr";
-                e.Graphics.DrawString(lineForShoppingItem, new Font("Arial", 10, FontStyle.Regular), Brushes.Black, 90, 160 + 15 * linesWrittenOnPage);
-                linesWrittenOnPage++;
-                totalLinesWritten++;
+                string lineForShoppingItem = "Varunummer " + _shoppingCart[_totalLinesWritten].Id.ToString() + ": " +
+                                             _shoppingCart[_totalLinesWritten].Name + ", # " +
+                                             _shoppingCart[_totalLinesWritten].Amount.ToString() + " á " +
+                                             _shoppingCart[_totalLinesWritten].Price.ToString() + " = " +
+                                             _shoppingCart[_totalLinesWritten].TotalPrice.ToString() + " kr";
+                e.Graphics.DrawString(lineForShoppingItem, new Font("Arial", 10, FontStyle.Regular), Brushes.Black, 90, 160 + 15 * _linesWrittenOnPage);
+                _linesWrittenOnPage++;
+                _totalLinesWritten++;
             }
 
-            if (totalLinesWritten < linesToWrite)
+            if (_totalLinesWritten < _linesToWrite)
             {
                 e.HasMorePages = true; // If there are more items left to print, this function will be called again, continuing on a new page.
-                linesWrittenOnPage = 0;
+                _linesWrittenOnPage = 0;
             }
             else
             {
                 e.HasMorePages = false;
-                isFirstPage = true; // If all items have been printed, the printer is set to expect a new first page. 
+                _isFirstPage = true; // If all items have been printed, the printer is set to expect a new first page. 
             }
         }
     }

@@ -7,11 +7,11 @@ namespace Laboration3
     {
         public List<ShoppingCartItem> ShoppingCart { get; set; } = new List<ShoppingCartItem>();
         public double OrderTotal { get; set; }
-        private readonly ReceiptPrinter receiptPrinter;
+        private readonly ReceiptPrinter _receiptPrinter;
 
         public CheckOutManager()
         {
-            receiptPrinter = new ReceiptPrinter(ShoppingCart);
+            _receiptPrinter = new ReceiptPrinter(ShoppingCart);
         }
 
         public void AddProductToShoppingCart(Product product, int amount)
@@ -64,18 +64,17 @@ namespace Laboration3
 
         public void FinishOrder()
         {
-            AskToWriteReceipt();
+            AskToPrintReceipt();
             ShoppingCart.Clear();
             OrderTotal = 0;
         }
 
-        private void AskToWriteReceipt()
+        private void AskToPrintReceipt()
         {
             DialogResult dialogResult = MessageBox.Show("Vill du skriva ut ett kvitto för köpet?",
                             "Kvitto", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.No)
-                return;
-            receiptPrinter.PrintReceipt(OrderTotal);
+            if (dialogResult == DialogResult.Yes)
+                _receiptPrinter.PrintReceipt(OrderTotal);
         }
     }
 }

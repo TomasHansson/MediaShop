@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Laboration3
 {
-    public static class FileManager
+    public class FileManager
     {
-        public static List<Product> LoadProductsFromFile(string filepath)
+        public List<Product> LoadProductsFromFile(string filepath)
         {
             List<Product> products = new List<Product>();
             using (StreamReader streamReader = new StreamReader(filepath))
@@ -35,7 +35,7 @@ namespace Laboration3
             return products;
         }
 
-        public static void LoadSellRecordsFromFile(List<Product> products, string filepath)
+        public void LoadSellRecordsFromFile(List<Product> products, string filepath)
         {
             using (StreamReader streamReader = new StreamReader(filepath))
             {
@@ -56,7 +56,7 @@ namespace Laboration3
             }
         }
 
-        public static void SaveProductsToFile(List<Product> products, string filepath)
+        public void SaveProductsToFile(List<Product> products, string filepath)
         {
             using (StreamWriter streamWriter = new StreamWriter(filepath))
             {
@@ -75,7 +75,7 @@ namespace Laboration3
             }
         }
 
-        public static void SaveSellRecordsToFile(List<Product> products, string filepath)
+        public void SaveSellRecordsToFile(List<Product> products, string filepath)
         {
             using (StreamWriter streamWriter = new StreamWriter(filepath))
             {

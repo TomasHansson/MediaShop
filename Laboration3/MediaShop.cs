@@ -10,28 +10,30 @@ namespace Laboration3
         public CheckOutManager CheckOut { get; set; } = new CheckOutManager();
         public StockManager Stock { get; set; } = new StockManager();
         public QueryManager Query { get; set; } = new QueryManager();
+        public FileManager FileManager { get; set; } = new FileManager();
         public ShoppingCartItem SelectedShoppingCartItem { get; set; }
         public Product SelectedProduct { get; set; }
 
-        private const string productsFile = "Products.csv";
-        private const string sellRecordsFile = "SellRecords.csv";
+        private const string _productsFile = "Products.csv";
+        private const string _sellRecordsFile = "SellRecords.csv";
+        private const string _exportProductsFile = @"..\..\..\..\Laboration4\Laboration4\bin\Debug\frMediaShop\Products.csv";
+        private const string _importProductsFile = @"..\..\..\..\Laboration4\Laboration4\bin\Debug\tillMediaShop\Products.csv";
 
         public MediaShop()
         {
             InitializeComponent();
             LoadProductsOnStart();
             SetupDataSources();
-            searchFilterComboBox.SelectedIndex = 1; // The preset value for the searchfilter is "Namn".
-            timePeriodComboBox.SelectedIndex = 0; // The preset value for the time period in statistics is "Total försäljning".
+            SetupComboBoxes();
         }
 
         private void LoadProductsOnStart()
         {
-            if (File.Exists(productsFile))
+            if (File.Exists(_productsFile))
             {
-                Stock.Products = FileManager.LoadProductsFromFile(productsFile);
-                if (File.Exists(sellRecordsFile))
-                    FileManager.LoadSellRecordsFromFile(Stock.Products, sellRecordsFile);
+                Stock.Products = FileManager.LoadProductsFromFile(_productsFile);
+                if (File.Exists(_sellRecordsFile))
+                    FileManager.LoadSellRecordsFromFile(Stock.Products, _sellRecordsFile);
             }
         }
 
@@ -46,6 +48,12 @@ namespace Laboration3
             statisticsListBox.DataSource = productsListBindingSource;
             statisticsBindingSource.DataSource = Query.StatisticsResult;
             statisticsDataGridView.DataSource = statisticsBindingSource;
+        }
+
+        private void SetupComboBoxes()
+        {
+            searchFilterComboBox.SelectedIndex = 1; // The preset value for the searchfilter is "Namn".
+            timePeriodComboBox.SelectedIndex = 0; // The preset value for the time period in statistics is "Total försäljning".
         }
 
         // By reseting the datasource for the bindingsource, the list is refreshed when items are added or removed.
@@ -236,8 +244,8 @@ namespace Laboration3
             if (Validation.ProductsListIsEmpty(Stock.Products))
                 return;
 
-            FileManager.SaveProductsToFile(Stock.Products, productsFile);
-            FileManager.SaveSellRecordsToFile(Stock.Products, sellRecordsFile);
+            FileManager.SaveProductsToFile(Stock.Products, _productsFile);
+            FileManager.SaveSellRecordsToFile(Stock.Products, _sellRecordsFile);
         }
 
         private void ProductsListBindingSource_CurrentChanged(object sender, EventArgs e)
@@ -257,8 +265,11 @@ namespace Laboration3
 
             string searchFilter = searchFilterComboBox.Text;
             string searchTerm = searchTermTextBox.Text.Trim().ToLower();
-            string minValue = searchAtLeastTextBox.Text;
-            string maxValue = searchAtMostTextBox.Text;
+
+            // This means that any non-numeric input value is simply ignored. Since a faulty input here won't cause any errors in the program, error messages were omitted and a
+            // default value (0 for the lower bound and double.MaxValue for the upper bound) is used instead.
+            double minValue = double.TryParse(searchAtLeastTextBox.Text, out double minInput) ? minInput : 0;
+            double maxValue = double.TryParse(searchAtMostTextBox.Text, out double maxInput) ? maxInput : double.MaxValue;
 
             Query.CreateSearchResult(Stock.Products, searchFilter, searchTerm, minValue, maxValue);
             productsListBindingSource.DataSource = Query.SearchResult;
@@ -297,10 +308,8 @@ namespace Laboration3
             if (Validation.ProductsListIsEmpty(Stock.Products) || Validation.NoProductIsSelected(SelectedProduct))
                 return;
 
-            Query.CreateSingleItemResult(SelectedProduct);
-            // By reseting the datasource for the bindingsource, the list is refreshed when items are added or removed.
-            statisticsBindingSource.DataSource = null;
-            statisticsBindingSource.DataSource = Query.StatisticsResult;
+            Query.CreateSingleItemStatisticsResult(SelectedProduct);
+            RefreshStatisticsDataGridView();
         }
 
         private void ShowTopSellersButton_Click(object sender, EventArgs e)
@@ -308,8 +317,13 @@ namespace Laboration3
             if (Validation.ProductsListIsEmpty(Stock.Products))
                 return;
 
-            Query.CreateTopSellersResult(Stock.Products, timePeriodComboBox.Text);
-            // By reseting the datasource for the bindingsource, the list is refreshed when items are added or removed.
+            Query.CreateTopSellersStatisticsResult(Stock.Products, timePeriodComboBox.Text);
+            RefreshStatisticsDataGridView();
+        }
+
+        // By reseting the datasource for the bindingsource, the list is refreshed when items are added or removed.
+        private void RefreshStatisticsDataGridView()
+        {
             statisticsBindingSource.DataSource = null;
             statisticsBindingSource.DataSource = Query.StatisticsResult;
         }
@@ -319,18 +333,15 @@ namespace Laboration3
             if (Validation.ProductsListIsEmpty(Stock.Products))
                 return;
 
-            const string exportProductsFile = @"..\..\..\..\Laboration4\Laboration4\bin\Debug\frMediaShop\Products.csv";
-            FileManager.SaveProductsToFile(Stock.Products, exportProductsFile);
+            FileManager.SaveProductsToFile(Stock.Products, _exportProductsFile);
         }
-
+        
         private void ImportProductsButton_Click(object sender, EventArgs e)
         {
-            const string importProductsFile = @"..\..\..\..\Laboration4\Laboration4\bin\Debug\tillMediaShop\Products.csv";
-
-            if (Validation.NoImportFileFound(importProductsFile))
+            if (Validation.NoImportFileFound(_importProductsFile))
                 return;
 
-            Stock.Products = FileManager.LoadProductsFromFile(importProductsFile);
+            Stock.Products = FileManager.LoadProductsFromFile(_importProductsFile);
             RefreshProductsDataGridVew();
         }
     }
