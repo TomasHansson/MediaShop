@@ -9,3 +9,6 @@ What I Learned:
 - Using DataGridViews and associated BindingSources with Windows Forms.
 - How to print a simple list (receipt) based on the contents of a DataGridView.
 - How CSV-files are structured and how they may be used to store and load information.
+
+While is wasn't part of the assignment, I decided to add some basic unit tests for the project, giving me an opportunity to practice writing unit tests since I've recently taken an online course on the subject.
+- Writing basic unit tests.
