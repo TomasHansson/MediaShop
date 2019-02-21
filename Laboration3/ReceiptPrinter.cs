@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Laboration3
 {
-    public class ReceiptPrinter
+    public class ReceiptPrinter : IReceiptPrinter
     {
         private PrintDocument _printDocument = new PrintDocument();
         private readonly PrintDialog _printDialog = new PrintDialog();

@@ -134,9 +134,16 @@ namespace Laboration3
             if (Validation.ShoppingCartIsEmpty(CheckOut.ShoppingCart))
                 return;
 
+            DialogResult dialogResult = MessageBox.Show("Vill du skriva ut ett kvitto för köpet?",
+                "Kvitto", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+                CheckOut.PrintReceipt();
+
             foreach (ShoppingCartItem item in CheckOut.ShoppingCart)
                 Stock.SaleOfProduct(Stock.Products.First(x => x.Id == item.Id), item.Amount, DateTime.Now);
+
             CheckOut.FinishOrder();
+
             RefreshShoppingCartDataGridView();
             productListDataGridView.Refresh();
             ShowOrderTotal();

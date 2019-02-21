@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace Laboration3
 {
@@ -7,11 +6,11 @@ namespace Laboration3
     {
         public List<ShoppingCartItem> ShoppingCart { get; set; } = new List<ShoppingCartItem>();
         public double OrderTotal { get; set; }
-        private readonly ReceiptPrinter _receiptPrinter;
+        private readonly IReceiptPrinter _receiptPrinter;
 
-        public CheckOutManager()
+        public CheckOutManager(IReceiptPrinter receiptPrinter = null)
         {
-            _receiptPrinter = new ReceiptPrinter(ShoppingCart);
+            _receiptPrinter = receiptPrinter ?? new ReceiptPrinter(ShoppingCart);
         }
 
         public void AddProductToShoppingCart(Product product, int amount)
@@ -62,19 +61,15 @@ namespace Laboration3
             CalculateOrderTotal();
         }
 
-        public void FinishOrder()
+        public void PrintReceipt()
         {
-            AskToPrintReceipt();
-            ShoppingCart.Clear();
-            OrderTotal = 0;
+            _receiptPrinter.PrintReceipt(OrderTotal);
         }
 
-        private void AskToPrintReceipt()
+        public void FinishOrder()
         {
-            DialogResult dialogResult = MessageBox.Show("Vill du skriva ut ett kvitto för köpet?",
-                            "Kvitto", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.Yes)
-                _receiptPrinter.PrintReceipt(OrderTotal);
+            ShoppingCart.Clear();
+            OrderTotal = 0;
         }
     }
 }
