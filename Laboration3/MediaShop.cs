@@ -140,7 +140,7 @@ namespace Laboration3
                 CheckOut.PrintReceipt();
 
             foreach (ShoppingCartItem item in CheckOut.ShoppingCart)
-                Stock.SaleOfProduct(Stock.Products.First(x => x.Id == item.Id), item.Amount, DateTime.Now);
+                Stock.SaleOfProduct(Stock.Products.First(x => x.Id == item.Id), item.Amount);
 
             CheckOut.FinishOrder();
 
