@@ -66,7 +66,7 @@ namespace Laboration3
             _receiptPrinter.PrintReceipt(OrderTotal);
         }
 
-        public void FinishOrder()
+        public void ClearShoppingCart()
         {
             ShoppingCart.Clear();
             OrderTotal = 0;

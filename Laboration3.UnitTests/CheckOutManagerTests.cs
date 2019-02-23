@@ -42,15 +42,15 @@ namespace Laboration3.UnitTests
         }
 
         [Test]
-        public void AddProductToShoppingCart_WhenCalled_ProductAddedToShoppingCart()
+        public void AddProductToShoppingCart_ValidInputParameters_ProductAddedToShoppingCart()
         {
             _checkOutManager.AddProductToShoppingCart(_sampleProduct, 1);
 
-            Assert.That(_checkOutManager.ShoppingCart.Count, Is.EqualTo(1));
+            Assert.That(_checkOutManager.ShoppingCart.Exists(sci => sci.Id == 1));
         }
 
         [Test]
-        public void AddProductToShoppingCart_WhenCalled_OrderTotalSetToProductsTotalPrice()
+        public void AddProductToShoppingCart_ValidInputParameters_OrderTotalSetToProductsTotalPrice()
         {
             _checkOutManager.AddProductToShoppingCart(_sampleProduct, 1);
 
@@ -58,7 +58,7 @@ namespace Laboration3.UnitTests
         }
 
         [Test]
-        public void IncreaseAmountOfItem_WhenCalled_AmountOfItemIncreasedByOne()
+        public void IncreaseAmountOfItem_ValidInputParameters_AmountOfItemIncreasedByOne()
         {
             _checkOutManager.ShoppingCart.Add(_sampleShoppingCartItem);
 
@@ -68,7 +68,7 @@ namespace Laboration3.UnitTests
         }
 
         [Test]
-        public void IncreaseAmountOfItem_WhenCalled_TotalPriceOfItemIncreasedByItemsPrice()
+        public void IncreaseAmountOfItem_ValidInputParameters_TotalPriceOfItemIncreasedByItemsPrice()
         {
             _checkOutManager.ShoppingCart.Add(_sampleShoppingCartItem);
 
@@ -78,7 +78,7 @@ namespace Laboration3.UnitTests
         }
 
         [Test]
-        public void DecreaseAmountOfItem_WhenCalled_AmountOfItemDecreasedByOne()
+        public void DecreaseAmountOfItem_ValidInputParameters_AmountOfItemDecreasedByOne()
         {
             _sampleShoppingCartItem.Amount = 2;
             _sampleShoppingCartItem.TotalPrice *= 2;
@@ -90,7 +90,7 @@ namespace Laboration3.UnitTests
         }
 
         [Test]
-        public void DecreaseAmountOfItem_WhenCalled_TotalPriceOfItemDecreasedByItemsPrice()
+        public void DecreaseAmountOfItem_ValidInputParameters_TotalPriceOfItemDecreasedByItemsPrice()
         {
             _sampleShoppingCartItem.Amount = 2;
             _sampleShoppingCartItem.TotalPrice *= 2;
@@ -102,13 +102,13 @@ namespace Laboration3.UnitTests
         }
 
         [Test]
-        public void RemoveItem_WhenCalled_ItemRemovedFromShoppingCart()
+        public void RemoveItem_ValidInputParameters_ItemRemovedFromShoppingCart()
         {
             _checkOutManager.ShoppingCart.Add(_sampleShoppingCartItem);
 
             _checkOutManager.RemoveItem(_sampleShoppingCartItem);
 
-            Assert.That(_checkOutManager.ShoppingCart.Count, Is.EqualTo(0));
+            Assert.That(!_checkOutManager.ShoppingCart.Exists(sci => sci.Id == 1));
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace Laboration3.UnitTests
         {
             _checkOutManager.ShoppingCart.Add(_sampleShoppingCartItem);
 
-            _checkOutManager.FinishOrder();
+            _checkOutManager.ClearShoppingCart();
 
             Assert.That(_checkOutManager.ShoppingCart.Count, Is.EqualTo(0));
         }
@@ -134,7 +134,7 @@ namespace Laboration3.UnitTests
         {
             _checkOutManager.ShoppingCart.Add(_sampleShoppingCartItem);
 
-            _checkOutManager.FinishOrder();
+            _checkOutManager.ClearShoppingCart();
 
             Assert.That(_checkOutManager.OrderTotal, Is.EqualTo(0));
         }

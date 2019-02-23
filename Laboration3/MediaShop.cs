@@ -142,7 +142,7 @@ namespace Laboration3
             foreach (ShoppingCartItem item in CheckOut.ShoppingCart)
                 Stock.SaleOfProduct(Stock.Products.First(x => x.Id == item.Id), item.Amount);
 
-            CheckOut.FinishOrder();
+            CheckOut.ClearShoppingCart();
 
             RefreshShoppingCartDataGridView();
             productListDataGridView.Refresh();
