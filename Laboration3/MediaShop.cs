@@ -10,7 +10,6 @@ namespace Laboration3
         public CheckOutManager CheckOut { get; set; } = new CheckOutManager();
         public StockManager Stock { get; set; } = new StockManager();
         public QueryManager Query { get; set; } = new QueryManager();
-        public FileManager FileManager { get; set; } = new FileManager();
         public ShoppingCartItem SelectedShoppingCartItem { get; set; }
         public Product SelectedProduct { get; set; }
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Laboration3.UnitTests
 {
     [TestFixture]
-    class StockManagerUnitTests
+    class StockManagerTests
     {
         private StockManager _stockManager;
         private Product _sampleProduct;
