@@ -7,6 +7,17 @@ namespace Laboration3
 {
     public static class Validation
     {
+        // All functions in this class follows the same pattern:
+        // - It checks for a possible error or incorrect user-input.
+        // - The name of the function is the possible issue that's being tested.
+        // - If an issue exists, a MessageBox is shown, alerting the user of the issue.
+        // - If an issue exists, return true, if not, return false.
+        //
+        // The functions in this class are called in most event-handlers in the MediaShop-class. 
+        // If any Validation returns true, ie an issue exists, the event-handler will exit with a return statement.
+        // This ensures that the user cannot make any faulty operations and that they're alerted of why that operation
+        // would indeed be a faulty one.
+
         public static bool ProductsListIsEmpty(List<Product> products)
         {
             if (products.Count == 0)
