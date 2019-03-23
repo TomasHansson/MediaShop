@@ -9,6 +9,11 @@ namespace Laboration3
         public List<Product> SearchResult { get; set; } = new List<Product>();
         public List<StatisticsItem> StatisticsResult { get; set; } = new List<StatisticsItem>();
 
+        // CreateTopSellersStatisticsResult: Creates a list of the top-ten selling products in the given list 
+        // of products over the given timePeriod.
+        // Pre: The list of products is not empty. timePeriod is either "Total försäljning" (Total Sales),
+        // "Senaste året" (Last Year) or "Senaste månaden" (Last Month).
+        // Post: The list StatisticsResult contains the top-ten selling items from the given timePeriod.
         public void CreateTopSellersStatisticsResult(List<Product> products, string timePeriod)
         {
             StatisticsResult.Clear();
@@ -22,12 +27,18 @@ namespace Laboration3
                 StatisticsResult = StatisticsResult.OrderByDescending(x => x.AmountSoldLastMonth).Take(10).ToList();
         }
 
+        // CreateSingleItemStatisticsResult: Calculates statistics for a single product.
+        // Pre: product != null.
+        // Post: The list StatisticsResult contains the statistics of the given product.
         public void CreateSingleItemStatisticsResult(Product product)
         {
             StatisticsResult.Clear();
             StatisticsResult.Add(CreateStatisticsItemFromProduct(product));
         }
 
+        // CreateStatisticsItemFromProduct: Calculates the statistics of a product and returns it as a StatisticsItem.
+        // Pre: product != null.
+        // Post: A StatisticsItem containing the statistics of the given products has been returned to the caller.
         private StatisticsItem CreateStatisticsItemFromProduct(Product product)
         {
             StatisticsItem statisticsItem = new StatisticsItem()
@@ -48,6 +59,11 @@ namespace Laboration3
             return statisticsItem;
         }
 
+        // CreateSearchResult: Creates a list of products that fits the criteria of the given search-criteria.
+        // Pre: products is a non-empty list of products. searchTerm is a non-empty string. minValue and maxValue are both >= 0.
+        // searchFilter is one of the following: "Varunummer" (Id), "Namn" (Name), "Pris" (Price), "Varutyp" (Type), "Skapare" (Creator),
+        // "Utgivare" (Publisher), "Lager" (NumberInStock) or "Antal sålda" (AmountSold).
+        // Post: The list SearchResult contains all products that fits the given search-critera.
         public void CreateSearchResult(List<Product> products, string searchFilter, string searchTerm, double minValue, double maxValue)
         {
             switch (searchFilter)
